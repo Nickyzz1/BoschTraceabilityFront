@@ -81,6 +81,7 @@
                             <th>Data de Criação</th>
                             <th>Estação Atual</th>
                             <th>Status</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -90,6 +91,10 @@
                             <td>{{ item.estacaoAtual }}</td>
                             <td>
                                 <nz-badge [nzStatus]="'processing'" [nzText]="item.status"></nz-badge>
+                            </td>
+                            <td class="flex items-center gap-6 cursor-pointer">
+                                <nz-icon nzType="edit" nzTheme="outline" />
+                                <nz-icon nzType="delete" nzTheme="outline" />
                             </td>
                         </tr>
                     </tbody>
@@ -146,6 +151,7 @@
                         <th>Código</th>
                         <th>Data de Criação</th>
                         <th>Quantidade</th>
+                        <th>Ações</th>
                     
                     </tr>
                 </thead>
@@ -154,6 +160,10 @@
                         <td><b>{{ item.title}}</b></td>
                         <td>{{ item.dataCriacao }}</td>
                         <td>{{ item.quantidade }}</td>
+                        <td class="flex items-center gap-6 cursor-pointer">
+                            <nz-icon nzType="edit" nzTheme="outline" />
+                            <nz-icon nzType="delete" nzTheme="outline" />
+                        </td>
                        
                     </tr>
                 </tbody>

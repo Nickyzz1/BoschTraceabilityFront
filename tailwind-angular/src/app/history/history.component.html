@@ -1,0 +1,51 @@
+<!-- container principal -->
+<div class="min-h-screen bg-gray-200 overflow-x-hidden">
+    <!-- container com  padding -->
+    <div class="flex flex-col gap-4 px-6 mt-6 py-5 bg-white mx-6">
+        <h1 style="color: black;" class="text-black font-bold text-lg">Histórico de movimentações</h1>
+        <h2 style="color: rgb(79, 77, 77);" class="text-gray-100">
+            Consulte o histórico completo de movimentações das peças no sistema.
+        </h2>
+        <div class="flex flex-col w-full gap-4">
+            <div class="border-1 border-gray-200 shadow rounded p-4">
+                <h1 style="color: black;" class="text-lg font-bold">Buscar histórico por peça</h1>
+                <label class="font-semibold text-gray-700" for="peca-codigo">Código da peça</label>
+                <div class="flex items-center gap-3">
+                    <div class="flex flex-col gap-2 w-full">
+                        <input nz-input id="peca-codigo" placeholder="Digite o código da peça" [(ngModel)]="value"
+                            type="number" class="!rounded-md" style="color: black;" />
+                    </div>
+                    <button style="color: white;"
+                        class="bg-blue-500 hover:bg-blue-800 text-white p-2 rounded cursor-pointer ease-in-out">
+                        Buscar
+                    </button>
+                </div>
+            </div>
+            <div class="border-1 border-gray-200 shadow rounded p-4">
+                <nz-table [nzData]="data" [nzFrontPagination]="false" [nzShowPagination]="false">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Data de Criação</th>
+                            <th>Estação Atual</th>
+                            <th>Responsável</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of data">
+                            <td><b>{{ item.codigo }}</b></td>
+                            <td>{{ item.dataCriacao }}</td>
+                            <td>{{ item.estacaoAtual }}</td>
+                            <td>
+                                <nz-badge [nzStatus]="'processing'" [nzText]="item.status"></nz-badge>
+                            </td>
+                            
+                        </tr>
+                    </tbody>
+                </nz-table>
+            
+            </div>
+        </div>
+    </div>
+</div>

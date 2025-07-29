@@ -14,15 +14,15 @@
 
   <!-- Navegação (desktop) -->
   <div class="hidden md:flex gap-3 items-center mt-3 md:mt-0">
-    <div class="flex items-center gap-3 text-black hover:bg-gray-200 py-2 rounded cursor-pointer">
+    <div [routerLink]="['']" class="flex items-center gap-3 text-black hover:bg-gray-200 py-2 rounded cursor-pointer">
       <nz-icon nzType="bar-chart" nzTheme="outline" class="text-lg"></nz-icon>
       <span class="text-lg">Dashboard</span>
     </div>
-    <div class="flex items-center gap-3 text-black hover:bg-gray-200 px-3 py-2 rounded cursor-pointer">
+    <div  [routerLink]="['management']" class="flex items-center gap-3 text-black hover:bg-gray-200 px-3 py-2 rounded cursor-pointer">
       <nz-icon nzType="appstore" nzTheme="outline" class="text-lg"></nz-icon>
       <span class="text-lg">Gestão</span>
     </div>
-    <div class="flex items-center gap-3 text-black hover:bg-gray-200 px-3 py-2 rounded cursor-pointer">
+    <div [routerLink]="['moviment']" class="flex items-center gap-3 text-black hover:bg-gray-200 px-3 py-2 rounded cursor-pointer">
       <nz-icon nzType="swap" nzTheme="outline" class="text-lg"></nz-icon>
       <span class="text-lg">Mover Peças</span>
     </div>

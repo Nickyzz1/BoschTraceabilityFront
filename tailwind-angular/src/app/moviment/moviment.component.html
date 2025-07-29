@@ -1,0 +1,83 @@
+<!-- container principal -->
+<div class="min-h-screen bg-gray-200 overflow-x-hidden">
+
+    <!-- cabeçalho -->
+    <app-header></app-header>
+
+    <!-- container com  padding -->
+    <div class="flex flex-col gap-4 px-6 mt-6 py-5">
+
+        <!-- Card central branco com sombra -->
+        <div class="p-5 bg-white rounded shadow flex flex-col justify-center items-center mx-auto w-full gap-4">
+            <div class="self-start w-full flex flex-col mx-5">
+                <h1 style="color: black;" class="text-black font-bold text-lg">
+                    Controle de movimentação
+                </h1>
+                <h2 style="color: rgb(79, 77, 77);" class="text-gray-100">
+                    Mova peças entre estações seguindo o fluxo do
+                    processo
+                </h2>
+            </div>
+            <div class="flex flex-col lg:grid lg:grid-cols-2 my-5 p-4 gap-4 w-full">
+
+                <div class="border border-gray-200 shadow p-4 rounded flex flex-col gap-4 w-full">
+                    <div class="flex gap-3 items-center">
+                        <nz-icon nzType="line-chart" nzTheme="outline" class="text-[26px]"
+                            style="color: #2A61CF;"></nz-icon>
+                        <h1 style="color: black;" class="text-black text-lg">Pesquisar e mover</h1>
+                    </div>
+                    <div class="flex flex-col">
+
+                    </div>
+
+                    <label class="font-semibold text-gray-700" for="peca-codigo">Código da peça</label>
+                    <div class="flex items-center gap-3">
+                        <div class="flex flex-col gap-2 w-full">
+                            <input nz-input id="peca-codigo" placeholder="Digite o código da peça" [(ngModel)]="value"
+                                type="number" class="!rounded-md" style="color: black;" />
+                        </div>
+                        <button style="color: white;"
+                            class="bg-blue-500 hover:bg-blue-800 text-white p-2 rounded cursor-pointer ease-in-out">
+                            Buscar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="border border-gray-200 shadow p-4 rounded flex flex-col gap-4 w-full">
+                    <div class="flex gap-3 items-center">
+                        <nz-icon nzType="line-chart" nzTheme="outline" class="text-[26px]"
+                            style="color: #2A61CF;"></nz-icon>
+                        <h1 style="color: black;" class="text-black text-lg">Peças em processamento (Estágio 1 até 2)
+                        </h1>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <div class="bg-gray-200 hover:bg-gray-300 rounded p-2 px-4 flex justify-between items-center ">
+                            <div class="flex flex-col">
+                                <h1 style="color: black;" class="font-bold">0001</h1>
+                                <h2 style="color: rgb(79, 77, 77);" class="text-sm">Estação 1</h2>
+                            </div>
+                            <div class="bg-blue-600 rounded-full flex items-center justify-center px-4 text-white py-1">
+                                11 peças</div>
+                        </div>
+                        <div class="bg-gray-200 hover:bg-gray-300 rounded p-2 px-4 flex justify-between items-center ">
+                            <div class="flex flex-col">
+                                <h1 style="color: black;" class="font-bold">0002</h1>
+                                <h2 style="color: rgb(79, 77, 77);" class="text-sm">Estação 2</h2>
+                            </div>
+                            <div class="bg-blue-600 rounded-full flex items-center justify-center px-4 text-white py-1">
+                                11 peças</div>
+                        </div>
+                        <div class="bg-gray-200 hover:bg-gray-300 rounded p-2 px-4 flex justify-between items-center ">
+                            <div class="flex flex-col">
+                                <h1 style="color: black;" class="font-bold">0003</h1>
+                                <h2 style="color: rgb(79, 77, 77);" class="text-sm">Estação 1</h2>
+                            </div>
+                            <div class="bg-blue-600 rounded-full flex items-center justify-center px-4 text-white py-1">
+                                11 peças</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

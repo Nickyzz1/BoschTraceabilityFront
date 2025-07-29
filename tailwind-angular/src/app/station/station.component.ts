@@ -30,9 +30,51 @@ export class StationComponent {
     estacaoAtual: 'Recebimento',
     status: 'Em Processamento',
   },
+  {
+    codigo: '001',
+    dataCriacao: '28/07/2025, 19:41',
+    estacaoAtual: 'Recebimento',
+    status: 'Em Processamento',
+  },
+  {
+    codigo: '001',
+    dataCriacao: '28/07/2025, 19:41',
+    estacaoAtual: 'Recebimento',
+    status: 'Em Processamento',
+  },
+  {
+    codigo: '001',
+    dataCriacao: '28/07/2025, 19:41',
+    estacaoAtual: 'Recebimento',
+    status: 'Em Processamento',
+  },
+  {
+    codigo: '001',
+    dataCriacao: '28/07/2025, 19:41',
+    estacaoAtual: 'Recebimento',
+    status: 'Em Processamento',
+  },
+  {
+    codigo: '001',
+    dataCriacao: '28/07/2025, 19:41',
+    estacaoAtual: 'Recebimento',
+    status: 'Em Processamento',
+  },
   ];
 
   dataStation = [
+  {
+    title: 'Estação inicial',
+    dataCriacao: '28/07/2025, 19:41',
+    quantidade:30,
+
+  },
+  {
+    title: 'Estação inicial',
+    dataCriacao: '28/07/2025, 19:41',
+    quantidade:30,
+
+  },
   {
     title: 'Estação inicial',
     dataCriacao: '28/07/2025, 19:41',

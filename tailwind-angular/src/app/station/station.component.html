@@ -1,45 +1,45 @@
-<!-- Container principal com altura mínima da tela, fundo cinza e sem scroll horizontal -->
+<!-- container principal -->
 <div class="min-h-screen bg-gray-200 overflow-x-hidden">
 
-    <!-- Cabeçalho da página -->
+    <!-- cabeçalho -->
     <app-header></app-header>
 
-    <!-- Container vertical com espaçamento e padding lateral -->
+    <!-- container com  padding -->
     <div class="flex flex-col gap-4 px-6 mt-6 py-5">
 
         <!-- Card central branco com sombra -->
         <div class="p-5 bg-white rounded shadow flex flex-col justify-center items-center mx-auto w-full gap-4">
 
-            <!-- Botões de seleção (tabs) -->
+            <!-- botões de seleção  -->
             <div nz-button-group class="w-full flex m-3">
-                <!-- Botão 1: Peças -->
+              
                 <button nz-button [nzType]="selected === 'pecas' ? 'default' : 'text'" (click)="select('pecas')"
                     class="w-1/2" [ngStyle]="{
-            'border': selected === 'pecas' ? '1px solid #1890ff' : '1px solid #d9d9d9',
-            'z-index': selected === 'pecas' ? 1 : 0,
-            'color': selected === 'pecas' ? '#1890ff' : 'inherit'
-          }">
+                        'border': selected === 'pecas' ? '1px solid #1890ff' : '1px solid #d9d9d9',
+                        'z-index': selected === 'pecas' ? 1 : 0,
+                        'color': selected === 'pecas' ? '#1890ff' : 'inherit'
+                    }">
                     <span nz-icon nzType="appstore"></span>
                     Gestão de Peças
                 </button>
 
-                <!-- Botão 2: Estações -->
+                
                 <button nz-button [nzType]="selected === 'estacoes' ? 'default' : 'text'" (click)="select('estacoes')"
                     class="w-1/2" [ngStyle]="{
-            'border': selected === 'estacoes' ? '1px solid #1890ff' : '1px solid #d9d9d9',
-            'z-index': selected === 'estacoes' ? 1 : 0,
-            'color': selected === 'estacoes' ? '#1890ff' : 'inherit'
-          }">
+                        'border': selected === 'estacoes' ? '1px solid #1890ff' : '1px solid #d9d9d9',
+                        'z-index': selected === 'estacoes' ? 1 : 0,
+                        'color': selected === 'estacoes' ? '#1890ff' : 'inherit'
+                    }">
                     <span nz-icon nzType="line-chart"></span>
                     Gestão de Estações
                 </button>
             </div>
 
-            <!-- Conteúdo de PEÇAS -->
+            <!-- se btn estiver em peças -->
             <div *ngIf="selected === 'pecas'"
                 class="border shadow border-gray-300 flex flex-col gap-3 rounded p-4 w-full">
 
-                <!-- Cadastrar nova peça -->
+                <!-- cadastrar nova peça -->
                 <div class="flex flex-col">
                     <h1 class="font-bold text-2xl text-black">+ Cadastrar nova peça</h1>
                     <h2 class="text-gray-100" style="color: rgb(79, 77, 77);">Registre uma nova peça no sistema de
@@ -52,7 +52,7 @@
                         <input nz-input id="peca-codigo" placeholder="Digite o código da peça" [(ngModel)]="value"
                             type="number" class="!rounded-md" style="color: black;" />
                     </div>
-                    <button class="bg-blue-500 hover:bg-blue-800 text-white p-2 rounded cursor-pointer ease-in-out">
+                    <button style="color: white;" class="bg-blue-500 hover:bg-blue-800 text-white p-2 rounded cursor-pointer ease-in-out">
                         Cadastrar
                     </button>
                 </div>
@@ -69,7 +69,7 @@
                         <input nz-input id="peca-codigo-search" placeholder="Digite o código da peça"
                             [(ngModel)]="value" type="number" class="!rounded-md" style="color: black;" />
                     </div>
-                    <button class="bg-blue-500 hover:bg-blue-800 text-white p-2 rounded cursor-pointer ease-in-out">
+                    <button style="color: white;" class="bg-blue-500 hover:bg-blue-800 text-white p-2 rounded cursor-pointer ease-in-out">
                         Pesquisar
                     </button>
                 </div>

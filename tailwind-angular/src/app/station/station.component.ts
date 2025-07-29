@@ -18,6 +18,7 @@ export class StationComponent {
   
   selected: string = 'pecas';
   value: number | null = null;
+  valueLocal: string = '';
   select(value: string) {
     this.selected = value;
   }
@@ -28,6 +29,15 @@ export class StationComponent {
     dataCriacao: '28/07/2025, 19:41',
     estacaoAtual: 'Recebimento',
     status: 'Em Processamento',
+  },
+  ];
+
+  dataStation = [
+  {
+    title: 'Estação inicial',
+    dataCriacao: '28/07/2025, 19:41',
+    quantidade:30,
+
   },
 ];
 }

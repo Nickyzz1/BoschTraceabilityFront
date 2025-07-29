@@ -7,13 +7,12 @@
     <!-- Container vertical com espaçamento e padding lateral -->
     <div class="flex flex-col gap-4 px-6 mt-6 py-5">
 
-        <!-- Bloco branco centralizado com sombra e borda arredondada -->
+        <!-- Card central branco com sombra -->
         <div class="p-5 bg-white rounded shadow flex flex-col justify-center items-center mx-auto w-full gap-4">
 
-            <!-- Grupo de botões (tabs) ocupando toda largura -->
-            <div nz-button-group class="w-full flex m-3 ">
-
-                <!-- Botão 1: Gestão de Peças -->
+            <!-- Botões de seleção (tabs) -->
+            <div nz-button-group class="w-full flex m-3">
+                <!-- Botão 1: Peças -->
                 <button nz-button [nzType]="selected === 'pecas' ? 'default' : 'text'" (click)="select('pecas')"
                     class="w-1/2" [ngStyle]="{
             'border': selected === 'pecas' ? '1px solid #1890ff' : '1px solid #d9d9d9',
@@ -24,7 +23,7 @@
                     Gestão de Peças
                 </button>
 
-                <!-- Botão 2: Gestão de Estações -->
+                <!-- Botão 2: Estações -->
                 <button nz-button [nzType]="selected === 'estacoes' ? 'default' : 'text'" (click)="select('estacoes')"
                     class="w-1/2" [ngStyle]="{
             'border': selected === 'estacoes' ? '1px solid #1890ff' : '1px solid #d9d9d9',
@@ -34,105 +33,136 @@
                     <span nz-icon nzType="line-chart"></span>
                     Gestão de Estações
                 </button>
+            </div>
 
-            </div> <!-- Fim do grupo de botões -->
+            <!-- Conteúdo de PEÇAS -->
+            <div *ngIf="selected === 'pecas'"
+                class="border shadow border-gray-300 flex flex-col gap-3 rounded p-4 w-full">
 
-            <!-- Bloco interno com borda, sombra, espaçamento e arredondado -->
-            <div class="border shadow border-gray-300 flex flex-col gap-3 rounded p-4 w-full">
-
-                <!-- Títulos e descrição -->
+                <!-- Cadastrar nova peça -->
                 <div class="flex flex-col">
-                    <h1 style="color: black;" class="font-bold text-2xl">
-                        + Cadastrar nova peça
-                    </h1>
-                    <h2 style="color: rgb(79, 77, 77);" class="text-gray-100">
-                        Registre uma nova peça no sistema de produção
-                    </h2>
+                    <h1 class="font-bold text-2xl text-black">+ Cadastrar nova peça</h1>
+                    <h2 class="text-gray-100" style="color: rgb(79, 77, 77);">Registre uma nova peça no sistema de
+                        produção</h2>
                 </div>
 
-                <!-- Label do input -->
                 <label class="font-semibold text-gray-700" for="peca-codigo">Código da peça</label>
-
-                <!-- Container do input e botão lado a lado -->
                 <div class="flex items-center gap-3">
-
-                    <!-- Container do input, ocupa toda largura disponível -->
                     <div class="flex flex-col gap-2 w-full">
-                        <input style="color: black;" nz-input id="peca-codigo" placeholder="Digite o código da peça"
-                            [(ngModel)]="value" type="number" class="!rounded-md" />
-                    </div> <!-- Fim do container do input -->
-
-                    <!-- Botão de pesquiar -->
-                    <button style="color: white;"
-                        class="bg-blue-500 hover:bg-blue-800 text-white p-2 rounded cursor-pointer ease-in-out">
+                        <input nz-input id="peca-codigo" placeholder="Digite o código da peça" [(ngModel)]="value"
+                            type="number" class="!rounded-md" style="color: black;" />
+                    </div>
+                    <button class="bg-blue-500 hover:bg-blue-800 text-white p-2 rounded cursor-pointer ease-in-out">
                         Cadastrar
                     </button>
-
-                </div> <!-- Fim do container input + botão -->
-
-            </div> <!-- Fim do bloco interno branco -->
-
-
-            <div class="border shadow border-gray-300 flex flex-col gap-3 rounded p-4 w-full">
-
-                <!-- Títulos e descrição -->
-                <div class="flex flex-col">
-                    <h1 style="color: black;" class="font-bold text-2xl">
-                        Listagem de peças
-                    </h1>
-                    <h2 style="color: rgb(79, 77, 77);" class="text-gray-100">
-                        1 peças cadastradas no sistema
-                    </h2>
                 </div>
 
-                <!-- Label do input -->
-                <label class="font-semibold text-gray-700" for="peca-codigo">Pesquise por código</label>
+                <!-- Listagem de peças -->
+                <div class="flex flex-col">
+                    <h1 class="font-bold text-2xl text-black">Listagem de peças</h1>
+                    <h2 class="text-gray-100" style="color: rgb(79, 77, 77);">1 peça cadastrada no sistema</h2>
+                </div>
 
-                <!-- Container do input e botão lado a lado -->
+                <label class="font-semibold text-gray-700" for="peca-codigo-search">Pesquise por código</label>
                 <div class="flex items-center gap-3">
-
-                    <!-- Container do input, ocupa toda largura disponível -->
                     <div class="flex flex-col gap-2 w-full">
-                        <input style="color: black;" nz-input id="peca-codigo" placeholder="Digite o código da peça"
-                            [(ngModel)]="value" type="number" class="!rounded-md" />
-                    </div> <!-- Fim do container do input -->
-
-                    <!-- Botão de cadastrar -->
-                    <button style="color: white;"
-                        class="bg-blue-500 hover:bg-blue-800 text-white p-2 rounded cursor-pointer ease-in-out">
+                        <input nz-input id="peca-codigo-search" placeholder="Digite o código da peça"
+                            [(ngModel)]="value" type="number" class="!rounded-md" style="color: black;" />
+                    </div>
+                    <button class="bg-blue-500 hover:bg-blue-800 text-white p-2 rounded cursor-pointer ease-in-out">
                         Pesquisar
                     </button>
-
-                </div> <!-- Fim do container input + botão -->
-                <div>
-                    <nz-table [nzData]="data" [nzFrontPagination]="false" [nzShowPagination]="false">
-                        <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Data de Criação</th>
-                                <th>Estação Atual</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of data">
-                                <td><b>{{ item.codigo }}</b></td>
-                                <td>{{ item.dataCriacao }}</td>
-                                <td>{{ item.estacaoAtual }}</td>
-                                <td>
-                                    <nz-badge [nzStatus]="'processing'" [nzText]="item.status"></nz-badge>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </nz-table>
-
                 </div>
 
-            </div> <!-- Fim do bloco interno branco -->
+                <nz-table [nzData]="data" [nzFrontPagination]="false" [nzShowPagination]="false">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Data de Criação</th>
+                            <th>Estação Atual</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of data">
+                            <td><b>{{ item.codigo }}</b></td>
+                            <td>{{ item.dataCriacao }}</td>
+                            <td>{{ item.estacaoAtual }}</td>
+                            <td>
+                                <nz-badge [nzStatus]="'processing'" [nzText]="item.status"></nz-badge>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+
+            </div> <!-- Fim bloco PEÇAS -->
+
+            <!-- Conteúdo de ESTAÇÕES ------------------------------------------------------------------------------------------- -->
+            <div *ngIf="selected === 'estacoes'"
+                class="border shadow border-gray-300 flex flex-col gap-3 rounded p-4 w-full">
+
+                <!-- Cadastrar nova estação -->
+                <div class="flex flex-col">
+                    <h1 class="font-bold text-2xl text-black">+ Cadastrar nova estação</h1>
+                    <h2 class="text-gray-100" style="color: rgb(79, 77, 77);">Registre uma nova estação no sistema</h2>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-3 w-full">
+                    <div class="flex flex-col md:flex-row items-center gap-3 w-full">
+                        <div class="w-full">
+                            <label class="font-semibold text-gray-700" for="estacao-codigo">Nome da estação</label>
+                            <div class="flex items-center gap-3">
+                                <div class="flex flex-col gap-2 w-full">
+                                <input nz-input id="estacao-codigo" placeholder="Digite o código da estação"
+                                    [(ngModel)]="value" type="text" class="!rounded-md" style="color: black;" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full">
+                            <label class="font-semibold text-gray-700" for="estacao-local">Ordem da estação</label>
+                            <div class="flex items-center gap-3">
+                                <div class="flex flex-col gap-2 w-full">
+                                <input nz-input id="estacao-local" placeholder="Digite a ordem da estação"
+                                    [(ngModel)]="valueLocal" type="number" class="!rounded-md" style="color: black;" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button style="color: white;" class="bg-blue-500 hover:bg-blue-800 text-white p-2 rounded cursor-pointer ease-in-out">
+                Cadastrar
+            </button>
+
+            <!-- Listagem de estações -->
+            <div class="flex flex-col mt-4">
+                <h1 class="font-bold text-2xl text-black">Listagem de estações</h1>
+                <h2 class="text-gray-100" style="color: rgb(79, 77, 77);">1 estação cadastrada no sistema</h2>
+            </div>
 
 
-        </div> <!-- Fim do container branco central -->
+            <nz-table [nzData]="dataStation" [nzFrontPagination]="false" [nzShowPagination]="false">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Data de Criação</th>
+                        <th>Quantidade</th>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of dataStation">
+                        <td><b>{{ item.title}}</b></td>
+                        <td>{{ item.dataCriacao }}</td>
+                        <td>{{ item.quantidade }}</td>
+                       
+                    </tr>
+                </tbody>
+            </nz-table>
 
-    </div> <!-- Fim do container flex-col com padding -->
+        </div> <!-- Fim bloco ESTAÇÕES -->
+
+    </div> <!-- Fim do card branco central -->
+
+</div> <!-- Fim da coluna principal -->
 
 </div> <!-- Fim do container principal -->

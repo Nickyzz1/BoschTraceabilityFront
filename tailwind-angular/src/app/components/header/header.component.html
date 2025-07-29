@@ -1,0 +1,61 @@
+<div class="w-full bg-white flex p-5 flex-col md:flex-row md:items-center md:justify-between px-8 shadow">
+  <!-- Logo + Título -->
+  <div class="flex gap-3 items-center justify-between">
+    <div class="flex gap-3 items-center">
+      <nz-icon nzType="line-chart" nzTheme="outline" class="text-[26px]" style="color: #2A61CF;"></nz-icon>
+      <h1 class="text-xl font-bold text-black leading-none relative top-[3px]">Sistema de Controle de Produção</h1>
+    </div>
+
+    <!-- Botão menu mobile -->
+    <button class="md:hidden" (click)="drawerVisible = true">
+      <nz-icon nzType="menu" nzTheme="outline" class="text-2xl text-black"></nz-icon>
+    </button>
+  </div>
+
+  <!-- Navegação (desktop) -->
+  <div class="hidden md:flex gap-3 items-center mt-3 md:mt-0">
+    <div class="flex items-center gap-3 text-black hover:bg-gray-200 py-2 rounded cursor-pointer">
+      <nz-icon nzType="bar-chart" nzTheme="outline" class="text-lg"></nz-icon>
+      <span class="text-lg">Dashboard</span>
+    </div>
+    <div class="flex items-center gap-3 text-black hover:bg-gray-200 px-3 py-2 rounded cursor-pointer">
+      <nz-icon nzType="appstore" nzTheme="outline" class="text-lg"></nz-icon>
+      <span class="text-lg">Gestão</span>
+    </div>
+    <div class="flex items-center gap-3 text-black hover:bg-gray-200 px-3 py-2 rounded cursor-pointer">
+      <nz-icon nzType="swap" nzTheme="outline" class="text-lg"></nz-icon>
+      <span class="text-lg">Mover Peças</span>
+    </div>
+    <div class="flex items-center gap-3 text-white bg-blue-600 hover:bg-blue-500 px-3 py-2 rounded cursor-pointer">
+      <nz-icon nzType="rollback" nzTheme="outline" class="text-lg"></nz-icon>
+      <span class="text-lg">Histórico</span>
+    </div>
+  </div>
+</div>
+
+<nz-drawer
+  [nzVisible]="drawerVisible"
+  nzPlacement="left"
+  nzTitle="Menu"
+  (nzOnClose)="drawerVisible = false"
+>
+  <div class="flex flex-col gap-4">
+    <div class="flex items-center gap-3 text-black hover:bg-gray-200 py-2 rounded cursor-pointer">
+      <nz-icon nzType="bar-chart" nzTheme="outline" class="text-lg"></nz-icon>
+      <span class="text-lg">Dashboard</span>
+    </div>
+    <div class="flex items-center gap-3 text-black hover:bg-gray-200 px-3 py-2 rounded cursor-pointer">
+      <nz-icon nzType="appstore" nzTheme="outline" class="text-lg"></nz-icon>
+      <span class="text-lg">Gestão</span>
+    </div>
+    <div class="flex items-center gap-3 text-black hover:bg-gray-200 px-3 py-2 rounded cursor-pointer">
+      <nz-icon nzType="swap" nzTheme="outline" class="text-lg"></nz-icon>
+      <span class="text-lg">Mover Peças</span>
+    </div>
+    <div class="flex items-center gap-3 text-white bg-blue-600 hover:bg-blue-500 px-3 py-2 rounded cursor-pointer">
+      <nz-icon nzType="rollback" nzTheme="outline" class="text-lg"></nz-icon>
+      <span class="text-lg">Histórico</span>
+    </div>
+  </div>
+</nz-drawer>
+

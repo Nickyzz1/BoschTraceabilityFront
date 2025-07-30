@@ -1,17 +1,19 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
+import { DataService } from './services/data.service';
 import { RouterOutlet } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { StationComponent } from './station/station.component';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
-
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HomeComponent, StationComponent, CommonModule ,HeaderComponent],
+  imports: [RouterOutlet, CommonModule, HeaderComponent],
   templateUrl: './app.html',
-  styleUrls: ['./app.css'],
+  styleUrls: ['./app.css']
 })
-export class App {
-  protected readonly title = signal('tailwind-angular');
+export class App implements OnInit {
+  constructor(public dataService: DataService) {}
+
+  ngOnInit() {
+    this.dataService.loadAll();
+  }
 }

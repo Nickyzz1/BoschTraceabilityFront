@@ -3,25 +3,25 @@
 
     <!-- container com  padding -->
     <div class="flex flex-col gap-4 px-6 mt-6 py-5 bg-white mx-6">
-        <h1 style="color: black;" class="text-black font-bold text-lg">Dashboard</h1>
+        <h1 style="color: black;" class="text-black font-bold text-xl">Dashboard</h1>
         <h2 style="color: rgb(79, 77, 77);" class="text-gray-100">Visão geral do sistema de produção</h2>
 
         <div class="flex items-center flex-col sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-3 my-3 w-full">
             <div class="bg-blue-100 border-1 rounded p-4 border-blue-700 items-start flex flex-col w-full">
                 <h1 style="color: black;">Total de peças</h1>
-                <h1 class="text-lg font-bold" style="color: rgb(6, 6, 191);">1</h1>
+                <h1 class="text-xl font-extrabold" style="color: rgb(6, 6, 191);">{{qtdParts}}</h1>
             </div>
             <div class="bg-yellow-100 border-1 rounded p-4 border-yellow-700 items-start flex flex-col w-full ">
-                <h1 style="color: black;">Total de peças</h1>
-                <h1 class="text-lg font-bold" style="color: rgb(125, 117, 7);">1</h1>
+                <h1 style="color: black;">Em processamento</h1>
+                <h1 class="text-xl font-extrabold" style="color: rgb(125, 117, 7);">1</h1>
             </div>
             <div class="bg-green-100 border-1 rounded p-4 border-green-700 items-start flex flex-col w-full ">
-                <h1 style="color: black;">Total de peças</h1>
-                <h1 class="text-lg font-bold" style="color: rgb(3, 116, 14);">1</h1>
+                <h1 style="color: black;">Finalizadas</h1>
+                <h1 class="text-xl font-extrabold" style="color: rgb(3, 116, 14);">1</h1>
             </div>
             <div class="bg-purple-100 border-1 rounded p-4 border-purple-700 items-start flex flex-col w-full ">
-                <h1 style="color: black;">Total de peças</h1>
-                <h1 class="text-lg font-bold" style="color: rgb(154, 8, 176);">1</h1>
+                <h1 style="color: black;">Movimentações</h1>
+                <h1 class="text-xl font-extrabold" style="color: rgb(154, 8, 176);">1</h1>
             </div>
 
         </div>
@@ -35,26 +35,17 @@
                     <h1 style="color: black;" class="text-black text-lg">Status das estações</h1>
                 </div>
                 <div class="flex flex-col gap-3">
-                    <div class="bg-gray-200 hover:bg-gray-300 rounded p-2 px-4 flex justify-between items-center ">
+                    <div
+                        *ngFor="let station of stations"
+                        class="bg-gray-200 hover:bg-gray-300 rounded p-2 px-4 flex justify-between items-center"
+                    >
                         <div class="flex flex-col">
-                            <h1 style="color: black;" class="font-bold">Recebimento</h1>
-                            <h2 style="color: rgb(79, 77, 77);" class="text-sm">Estação 1</h2>
+                        <h1 style="color: black;" class="font-bold">{{ station.title }}</h1>
+                        <h2 style="color: rgb(79, 77, 77);" class="text-sm">Estação {{ station.sort }}</h2>
                         </div>
-                        <div class="bg-blue-600 rounded-full flex items-center justify-center px-4 text-white py-1">11 peças</div>
-                    </div>
-                    <div class="bg-gray-200 hover:bg-gray-300 rounded p-2 px-4 flex justify-between items-center ">
-                        <div class="flex flex-col">
-                            <h1 style="color: black;" class="font-bold">Montagem</h1>
-                            <h2 style="color: rgb(79, 77, 77);" class="text-sm">Estação 2</h2>
+                        <div class="bg-blue-600 rounded-full flex items-center justify-center px-4 text-white py-1">
+                        {{ getPartsCountForStation(station.id) }} peça(s)
                         </div>
-                        <div class="bg-blue-600 rounded-full flex items-center justify-center px-4 text-white py-1">11 peças</div>
-                    </div>
-                    <div class="bg-gray-200 hover:bg-gray-300 rounded p-2 px-4 flex justify-between items-center ">
-                        <div class="flex flex-col">
-                            <h1 style="color: black;" class="font-bold">Inspeção final</h1>
-                            <h2 style="color: rgb(79, 77, 77);" class="text-sm">Estação 3</h2>
-                        </div>
-                          <div class="bg-blue-600 rounded-full flex items-center justify-center px-4 text-white py-1">11 peças</div>
                     </div>
                 </div>
             </div>
@@ -66,18 +57,15 @@
                     <h1 style="color: black;" class="text-black text-lg">Movimentações recentes</h1>
                 </div>
                 <div class="flex flex-col gap-3">
-                    <div class="bg-gray-200 hover:bg-gray-300 rounded p-2 px-4 flex justify-between items-center ">
+                    <div *ngFor="let moviment of history" class="bg-gray-200 hover:bg-gray-300 rounded p-2 px-4 flex justify-between items-center">
                         <div class="flex flex-col">
-                            <h1 style="color: black;" class="font-bold">Peça 001</h1>
-                            <h2 style="color: rgb(79, 77, 77);" class="text-sm">Entrada -> Recebimento</h2>
-                            <h2 style="color: rgb(79, 77, 77);" class="text-sm">28/07/2025</h2>
-                        </div>
-                    </div>
-                    <div class="bg-gray-200 hover:bg-gray-300 rounded p-2 px-4 flex justify-between items-center ">
-                        <div class="flex flex-col">
-                            <h1 style="color: black;" class="font-bold">Peça 002</h1>
-                            <h2 style="color: rgb(79, 77, 77);" class="text-sm">Entrada -> Recebimento</h2>
-                            <h2 style="color: rgb(79, 77, 77);" class="text-sm">28/07/2025</h2>
+                        <h1 style="color: black;" class="font-bold">Peça {{ moviment.partId | number:'3.0' }}</h1>
+                        <h2 style="color: rgb(79, 77, 77);" class="text-sm">
+                            {{ getStationName(moviment.origin) }} -> {{ getStationName(moviment.destination) }}
+                        </h2>
+                        <h2 style="color: rgb(79, 77, 77);" class="text-sm">
+                            {{ moviment.dateTime | date:'dd/MM/yyyy' }}
+                        </h2>
                         </div>
                     </div>
                 </div>

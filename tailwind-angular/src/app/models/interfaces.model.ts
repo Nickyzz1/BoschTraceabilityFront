@@ -15,7 +15,6 @@ export interface IMoviment {
 }
 
 export interface IStation {
-    curStation: string
     id: number,
     title: string,
     sort: number

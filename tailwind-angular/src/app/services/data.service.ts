@@ -41,4 +41,14 @@ export class DataService {
     this.getParts();
     this.getMoviments();
   }
+
+  // Atualizar código da peça (PUT)
+  updatePartCode(partId: number, newCode: string) {
+    return this.http.put<IPart>(`${this.apiUrl}/part/${partId}`, { Code: newCode});
+  }
+
+  // Excluir peça (DELETE)
+  deletePart(partId: number) {
+    return this.http.delete<void>(`${this.apiUrl}/part/${partId}`);
+  }
 }

@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IStation, IPart, IMoviment } from '../models/interfaces.model';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
@@ -12,8 +13,7 @@ export class DataService {
 
   constructor(private http: HttpClient) {}
 
-  //gets
-
+  // Gets
   getStations() {
     return this.http.get<IStation[]>(`${this.apiUrl}/station`);
   }
@@ -30,25 +30,36 @@ export class DataService {
     return this.http.get<number>(`${this.apiUrl}/station/max`);
   }
 
-  //posts
+  loadAll() {
+    this.getStations().subscribe((data) => this.stations.set(data));
+    this.getParts().subscribe((data) => this.parts.set(data));
+    this.getMoviments().subscribe((data) => this.moviments.set(data));
+  }
 
+  // Posts
   addPart(part: { Code: string; Status: string; CurStationId: number }) {
     return this.http.post<IPart>(`${this.apiUrl}/part`, part);
   }
 
-  loadAll() {
-    this.getStations();
-    this.getParts();
-    this.getMoviments();
+  addStation(station: { title: string; sort: number }) {
+    return this.http.post<IStation>(`${this.apiUrl}/station`, station);
   }
 
-  // Atualizar código da peça (PUT)
+  // Updates
   updatePartCode(partId: number, newCode: string) {
-    return this.http.put<IPart>(`${this.apiUrl}/part/${partId}`, { Code: newCode});
+    return this.http.put<IPart>(`${this.apiUrl}/part/${partId}`, { Code: newCode });
   }
 
-  // Excluir peça (DELETE)
+  updateStation(id: number, data: Partial<IStation>): Observable<any> {
+    return this.http.put(`${this.apiUrl}/station/${id}`, data);
+  }
+
+  // Deletes
   deletePart(partId: number) {
     return this.http.delete<void>(`${this.apiUrl}/part/${partId}`);
+  }
+
+  deleteStation(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/station/${id}`);
   }
 }

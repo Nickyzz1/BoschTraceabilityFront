@@ -23,25 +23,34 @@ import { IPart, IStation } from '../models/interfaces.model';
 })
 export class StationComponent {
 
-  //variaáveis
   newPartCode: string = '';
   partCode: string = '';
   parts: IPart[] = [];
   stations: IStation[] = [];
   selected: string = 'pecas';
   value: number | null = null;
-  valueLocal: string = '';
-  select(value: string) {
-    this.selected = value;
-  }
-
-  // controladores de estado
+  stationTitle: string | null = null;
+  stationOrder: number | null = null;
+  stationNewTitle = '';
+  stationNewOrder: number | null = null;
+  selectedStation: IStation | null = null;
 
   selectedPart: any = null;
   editModalVisible = false;
   deleteModalVisible = false;
   visible: boolean = false;
   loading = false;
+
+  constructor(public dataService: DataService) { }
+
+  ngOnInit() {
+    this.dataService.getParts().subscribe(parts => { this.parts = parts });
+    this.dataService.getStations().subscribe(stations => this.stations = stations);
+  }
+
+  select(value: string) {
+    this.selected = value;
+  }
 
   openEditModal(part: IPart) {
     this.selectedPart = part;
@@ -55,26 +64,64 @@ export class StationComponent {
     this.deleteModalVisible = true;
   }
 
-  // requisições
-  constructor(public dataService: DataService) { }
-
-  //gets
-  ngOnInit() {
-    this.dataService.getParts().subscribe(parts => { this.parts = parts });
-    this.dataService.getStations().subscribe(stations => this.stations = stations);
+  openEditModalStation(station: IStation) {
+    this.selectedStation = station;
+    this.stationNewTitle = station.title;
+    this.stationNewOrder = station.sort;
+    this.editModalVisible = true;
   }
-  //post
+
+  saveStation() {
+    if (!this.selectedStation) return;
+    if (!this.stationNewTitle || this.stationNewOrder === null) {
+      alert('Preencha todos os campos!');
+      return;
+    }
+    this.loading = true;
+    this.dataService.updateStation(this.selectedStation.id, {
+      title: this.stationNewTitle,
+      sort: this.stationNewOrder
+    }).subscribe({
+      next: () => {
+        alert('Estação atualizada com sucesso!');
+        this.editModalVisible = false;
+        this.loading = false;
+        this.dataService.getStations().subscribe(stations => this.stations = stations);
+      },
+      error: (err: any) => {
+        alert('Erro ao atualizar estação: ' + err.message);
+        this.loading = false;
+      }
+    });
+  }
+
+  openDeleteModalStation(station: IStation) {
+    this.selectedStation = station;
+    this.deleteModalVisible = true;
+  }
+
+  confirmDeleteStation() {
+    if (!this.selectedStation) return;
+    this.loading = true;
+    this.dataService.deleteStation(this.selectedStation.id).subscribe({
+      next: () => {
+        alert('Estação excluída!');
+        this.deleteModalVisible = false;
+        this.loading = false;
+        this.dataService.getStations().subscribe(stations => this.stations = stations);
+      },
+      error: (err: any) => {
+        alert('Erro ao excluir estação: ' + err.message);
+        this.loading = false;
+      }
+    });
+  }
+
   cadastrarPart() {
     if (!this.newPartCode) {
       alert('Digite o código da peça!');
       return;
     }
-    console.log({
-      Code: this.newPartCode,
-      Status: "Em processamento",
-      CurStationId: 1
-    });
-
     this.dataService.addPart({
       Code: this.newPartCode,
       Status: "Em processamento",
@@ -82,25 +129,40 @@ export class StationComponent {
     }).subscribe({
       next: (part) => {
         alert(`Peça ${part.code} criada com sucesso!`);
-        this.dataService.getParts().subscribe();
+        this.dataService.getParts().subscribe(parts => this.parts = parts);
         this.newPartCode = '';
       },
       error: (err) => alert('Erro ao criar peça: ' + err.message)
     });
   }
 
-  //put
+  cadastrarEstacao() {
+    if (!this.stationTitle || !this.stationOrder) {
+      alert('Preencha nome e ordem da estação!');
+      return;
+    }
+    this.dataService.addStation({
+      title: this.stationTitle,
+      sort: Number(this.stationOrder),
+    }).subscribe({
+      next: (station) => {
+        alert(`Estação ${station.title} cadastrada!`);
+        this.stationTitle = '';
+        this.stationOrder = null;
+        this.dataService.getStations().subscribe(stations => this.stations = stations);
+      },
+      error: (err) => alert('Erro ao cadastrar estação: ' + err.message)
+    });
+  }
 
   save() {
     if (!this.selectedPart) return;
-
     this.loading = true;
     this.dataService.updatePartCode(this.selectedPart.id, this.partCode).subscribe({
       next: updatedPart => {
         alert(`Peça atualizada para ${updatedPart.code}`);
         this.editModalVisible = false;
         this.loading = false;
-        // atualiza lista, por ex:
         this.dataService.getParts().subscribe(parts => this.parts = parts);
       },
       error: err => {
@@ -112,7 +174,6 @@ export class StationComponent {
 
   confirm() {
     if (!this.selectedPart) return;
-
     this.loading = true;
     this.dataService.deletePart(this.selectedPart.id).subscribe({
       next: () => {
@@ -120,7 +181,6 @@ export class StationComponent {
         this.deleteModalVisible = false;
         this.loading = false;
         this.selectedPart = null;
-        // atualiza lista:
         this.dataService.getParts().subscribe(parts => this.parts = parts);
       },
       error: err => {

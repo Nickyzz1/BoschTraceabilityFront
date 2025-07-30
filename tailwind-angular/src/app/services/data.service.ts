@@ -22,6 +22,14 @@ export class DataService {
     return this.http.get<IPart[]>(`${this.apiUrl}/part`);
   }
 
+  getPartById(id: number) {
+    return this.http.get<IPart[]>(`${this.apiUrl}/part/${id}`);
+  }
+
+  getPartByCode(code: string) : Observable<IPart>  {
+    return this.http.get<IPart>(`${this.apiUrl}/part/code/${code}`);
+  }
+
   getMoviments() {
     return this.http.get<IMoviment[]>(`${this.apiUrl}/moviment`);
   }
@@ -43,6 +51,10 @@ export class DataService {
 
   addStation(station: { title: string; sort: number }) {
     return this.http.post<IStation>(`${this.apiUrl}/station`, station);
+  }
+
+  addMoviment(moviment: { PartId: number; DestinationStationId: number, Responsable : string }) {
+    return this.http.post<IMoviment>(`${this.apiUrl}/moviment`, moviment);
   }
 
   // Updates

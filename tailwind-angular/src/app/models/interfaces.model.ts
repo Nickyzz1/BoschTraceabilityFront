@@ -6,10 +6,7 @@ export interface IPart {
 }
 
 export interface IMoviment {
-    id: number,
     partId: number,
-    dateTime: Date,
-    origin: number,
     destination: number,
     responsable: string
 }

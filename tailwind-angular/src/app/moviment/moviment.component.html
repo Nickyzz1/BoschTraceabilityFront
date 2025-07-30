@@ -28,13 +28,16 @@
                     </div>
                     <label class="font-semibold text-gray-700" for="peca-codigo">Código da peça</label>
                     <div class="flex items-center gap-3">
-                        <div class="flex flex-col gap-2 w-full">
-                            <input nz-input id="peca-codigo" placeholder="Digite o código da peça" [(ngModel)]="value"
-                                type="number" class="!rounded-md" style="color: black;" />
+                        <div class="flex items-center gap-2 w-full">
+                            <input nz-input id="peca-codigo" placeholder="Digite o código da peça" [(ngModel)]="code"
+                            type="text" class="!rounded-md" style="color: black;" />
+                            <input nz-input id="peca-codigo" placeholder="Responsavel" [(ngModel)]="responsable"
+                            type="text" class="!rounded-md" style="color: black;" />
+                            
                         </div>
-                        <button style="color: white;"
+                        <button (click)=registrarMovimentacao() style="color: white;"
                             class="bg-blue-500 hover:bg-blue-800 text-white p-2 rounded cursor-pointer ease-in-out">
-                            Buscar
+                            mover
                         </button>
                     </div>
 

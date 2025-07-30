@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { DataService } from '../services/data.service';
-import { IPart, IStation } from '../models/interfaces.model';
+import { IMovimentCreate, IMovimentGet, IPart, IStation } from '../models/interfaces.model';
 
 @Component({
   selector: 'app-home',

@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { IStation, IPart, IMoviment } from '../models/interfaces.model';
+import { IStation, IPart, IMovimentCreate, IMovimentGet } from '../models/interfaces.model';
 import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({ providedIn: 'root' })
@@ -9,7 +9,9 @@ export class DataService {
 
   stations = signal<IStation[]>([]);
   parts = signal<IPart[]>([]);
-  moviments = signal<IMoviment[]>([]);
+  movimentsCreate = signal<IMovimentCreate[]>([]);
+  movimentsGet = signal<IMovimentGet[]>([]);
+
 
   constructor(private http: HttpClient) {}
 
@@ -22,8 +24,8 @@ export class DataService {
     return this.http.get<IPart[]>(`${this.apiUrl}/part`);
   }
 
-  getPartById(id: number) {
-    return this.http.get<IPart[]>(`${this.apiUrl}/part/${id}`);
+  getPartById(id: number) : Observable<IPart> {
+    return this.http.get<IPart>(`${this.apiUrl}/part/${id}`);
   }
 
   getPartByCode(code: string) : Observable<IPart>  {
@@ -31,7 +33,7 @@ export class DataService {
   }
 
   getMoviments() {
-    return this.http.get<IMoviment[]>(`${this.apiUrl}/moviment`);
+    return this.http.get<IMovimentGet[]>(`${this.apiUrl}/moviment`);
   }
 
   getMaxStation() {
@@ -41,7 +43,7 @@ export class DataService {
   loadAll() {
     this.getStations().subscribe((data) => this.stations.set(data));
     this.getParts().subscribe((data) => this.parts.set(data));
-    this.getMoviments().subscribe((data) => this.moviments.set(data));
+    this.getMoviments().subscribe((data) => this.movimentsCreate.set(data));
   }
 
   // Posts
@@ -54,7 +56,7 @@ export class DataService {
   }
 
   addMoviment(moviment: { PartId: number; DestinationStationId: number, Responsable : string }) {
-    return this.http.post<IMoviment>(`${this.apiUrl}/moviment`, moviment);
+    return this.http.post<IMovimentCreate>(`${this.apiUrl}/moviment`, moviment);
   }
 
   // Updates

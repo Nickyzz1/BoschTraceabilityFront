@@ -5,10 +5,21 @@ export interface IPart {
     status: string,
 }
 
-export interface IMoviment {
+export interface IMovimentCreate {
     partId: number,
     destination: number,
     responsable: string
+}
+
+export interface IMovimentGet {
+  id: number;
+  partId: number;
+  part: any;
+  partCode?: string;
+  dateTime: string;
+  origin: number;
+  destination: number;
+  responsable: string;
 }
 
 export interface IStation {

@@ -21,31 +21,29 @@
                     </button>
                 </div>
             </div>
-            <div class="border-1 border-gray-200 shadow rounded p-4">
-                <nz-table [nzData]="data" [nzFrontPagination]="false" [nzShowPagination]="false">
+           <div class="border-1 border-gray-200 shadow rounded p-4">
+                <nz-table [nzData]="moviments" [nzFrontPagination]="false" [nzShowPagination]="false">
                     <thead>
-                        <tr>
-                            <th>Código</th>
-                            <th>Data de Criação</th>
-                            <th>Estação Atual</th>
-                            <th>Responsável</th>
-                            
-                        </tr>
+                    <tr>
+                        <th>Código da Peça</th>
+                        <th>Estação Anterior</th>
+                        <th>Estação Destino</th>
+                        <th>Data da Modificação</th>
+                        <th>Responsável</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of data">
-                            <td><b>{{ item.codigo }}</b></td>
-                            <td>{{ item.dataCriacao }}</td>
-                            <td>{{ item.estacaoAtual }}</td>
-                            <td>
-                                <nz-badge [nzStatus]="'processing'" [nzText]="item.status"></nz-badge>
-                            </td>
-                            
-                        </tr>
+                    <tr *ngFor="let item of moviments">
+                        <td><b>{{ item.partCode }}</b></td>
+                        <td>{{ item.origin }}</td>
+                        <td>{{ item.destination }}</td>
+                        <td>{{ item.dateTime | date: 'short' }}</td>
+                        <td>{{ item.responsable }}</td>
+                    </tr>
                     </tbody>
                 </nz-table>
-            
-            </div>
+                </div>
+
         </div>
     </div>
 </div>

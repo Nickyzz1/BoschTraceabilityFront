@@ -3,7 +3,7 @@ import { DataService } from '../services/data.service';
 import { CommonModule } from '@angular/common';
 import { IPart } from '../models/interfaces.model';
 import { IStation } from '../models/interfaces.model';
-import { IMoviment } from '../models/interfaces.model';
+import { IMovimentGet } from '../models/interfaces.model';
 import { NzIconModule } from 'ng-zorro-antd/icon';  
 
 @Component({
@@ -16,7 +16,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 export class HomeComponent implements OnInit {
   parts: IPart[] = [];
   stations: IStation[] = [];
-  history: IMoviment[] = [];
+  history: IMovimentGet[] = [];
   qtdParts = 0;
 
   constructor(private dataService: DataService) {}

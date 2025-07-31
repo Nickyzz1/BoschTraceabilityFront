@@ -1,59 +1,137 @@
-# TailwindAngular
+# Projeto Bosch Traceability System
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.3.
+Sistema completo para rastreabilidade de peças em uma linha de produção, desenvolvido com foco em organização, histórico e controle em tempo real. Inclui backend em C# (.NET) com SQL Server e frontend em Angular.
 
-## Development server
+---
 
-To start a local development server, run:
+## \:hammer: Funcionalidades Principais
+
+### Backend (C# .NET 8)
+
+* CRUD de Peças (Parts)
+* CRUD de Estações (Stations)
+* Registro de movimentações de peças entre estações (Moviments)
+* Validação da ordem das estações
+* Atualização automática do status da peça
+* Histórico de movimentações
+* Testes unitários com xUnit para os principais serviços
+
+### Frontend (Angular)
+
+* Tela principal de gerenciamento com visualização das peças, status e estações
+* Modal para edição e exclusão de peças
+* Tela de movimentação com histórico e formulário de movimentação
+* Interface limpa e responsiva com TailwindCSS
+
+---
+
+## \:file\_folder: Estrutura de Pastas
+
+### Backend
+
+```
+Project
+├── Controllers
+│   ├── PartController.cs
+│   ├── StationController.cs
+│   └── MovimentController.cs
+├── Entities
+│   ├── Part.cs
+│   ├── Station.cs
+│   └── Moviment.cs
+├── DTOs
+│   ├── PartCreateDto.cs
+│   ├── MovimentDto.cs
+├── Services
+│   ├── PartService.cs
+│   ├── StationService.cs
+│   └── MovimentService.cs
+├── Repositories
+│   └── Interfaces + Implementações (InMemory ou EF)
+├── Tests
+│   ├── PartServiceTests.cs
+│   ├── StationServiceTests.cs
+│   └── MovimentServiceTests.cs
+```
+
+### Frontend
+
+```
+src
+├── app
+│   ├── components
+│   │   ├── part-table
+│   │   ├── modal-edit-part
+│   │   └── modal-confirm-delete
+│   ├── pages
+│   │   ├── home-admin
+│   │   └── movimentar
+│   ├── services
+│   │   ├── part.service.ts
+│   │   ├── station.service.ts
+│   │   └── moviment.service.ts
+├── assets
+│   └── imagens, ícones etc.
+```
+
+---
+
+## \:floppy\_disk: Banco de Dados
+
+* Utiliza SQL Server
+* Tabelas principais:
+
+  * `Parts`: Código, Status, CurStationId
+  * `Stations`: Nome, Ordem
+  * `Moviments`: DataHora, PartId, FromStation, ToStation
+* Integridade referencial com chaves estrangeiras
+
+---
+
+## \:white\_check\_mark: Testes Automatizados (xUnit)
+
+Cobertura para:
+
+* Validação de ordem de estação
+* Rejeição de movimentações inválidas
+* Atualização de status da peça após movimentação
+* Verificação de código duplicado na criação de peça
+
+---
+
+## \:rocket: Como Rodar
+
+### Backend
 
 ```bash
+cd Project
+# Cria banco de dados automaticamente com EF
+dotnet ef database update
+# Roda a API
+dotnet run
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm install
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## \:thought\_balloon: Futuras Melhorias
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+* Autenticação e autorização de usuários
+* Filtros por período, status e estação
+* Exportação de histórico para CSV ou PDF
+* Dashboard com gráficos
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## \:technologist: Desenvolvido por Ni (Nicolle)
 
-```bash
-ng generate --help
-```
+Frontend dev apaixonada por design, realismo e esforço. Esse projeto é mais uma etapa no seu caminho pra se tornar uma dev front-end full stack de respeito!
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+> "Esforço é o que te leva quando o talento vacila."

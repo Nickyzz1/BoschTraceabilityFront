@@ -104,7 +104,7 @@ Cobertura para:
 ### Backend
 
 ```bash
-cd Project
+cd BoschTraceabilityApi
 # Cria banco de dados automaticamente com EF
 dotnet ef database update
 # Roda a API
@@ -114,7 +114,7 @@ dotnet run
 ### Frontend
 
 ```bash
-cd frontend
+cd tailwindAngular
 npm install
 ng serve
 ```

@@ -9,6 +9,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { IMovimentGet, IPart } from '../models/interfaces.model';
 import { DataService } from '../services/data.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-home',
@@ -19,22 +20,44 @@ import { DataService } from '../services/data.service';
     templateUrl: './history.component.html',
 })
 export class HistoryComponent {
+  value: string = '';
   moviments: IMovimentGet[] = [];
+  filteredMoviments: IMovimentGet[] = [];
+  partsMap = new Map<number, IPart>();
+  stationsMap = new Map<number, string>();  
 
   constructor(public dataService: DataService) {}
 
   ngOnInit() {
+    this.dataService.getParts().subscribe(parts => {
+      this.partsMap = new Map(parts.map(p => [p.id, p]));
+    });
+
+    this.dataService.getStations().subscribe(stations => {
+      this.stationsMap = new Map(stations.map(s => [s.id, s.title]));
+    });
+
     this.dataService.getMoviments().subscribe(moviments => {
       this.moviments = moviments;
-
-      // para cada movimentação, buscar o código da peça
-      this.moviments.forEach(mov => {
-        this.dataService.getPartById(mov.partId).subscribe(part => {
-          mov.partCode = part.code; // adiciona dinamicamente
-        });
-      });
+      this.applyFilter();
     });
   }
 
-  value: number | null = null;
+  applyFilter() {
+    const filterValue = this.value.trim().toLowerCase();
+
+    if (!filterValue) {
+      this.filteredMoviments = this.moviments;
+      return;
+    }
+
+    this.filteredMoviments = this.moviments.filter(mov => {
+      const part = this.partsMap.get(mov.partId);
+      const partCode = part?.code.toLowerCase() ?? '';
+      const originName = (this.stationsMap.get(mov.origin) ?? '').toLowerCase();
+      const destinationName = (this.stationsMap.get(mov.destination) ?? '').toLowerCase();
+
+      return partCode.includes(filterValue) || originName.includes(filterValue) || destinationName.includes(filterValue);
+    });
+  }
 }

@@ -15,7 +15,7 @@
                     processo
                 </h2>
             </div>
-            <div class="flex flex-col lg:grid lg:grid-cols-2 p-4 gap-4 w-full">
+            <div class="flex flex-col p-4 gap-4 w-full">
 
                 <div class="border border-gray-200 shadow p-4 rounded flex flex-col gap-4 w-full">
                     <div class="flex gap-3 items-center">
@@ -43,40 +43,25 @@
 
                 </div>
 
-                <div class="border border-gray-200 shadow p-4 rounded flex flex-col gap-4 w-full">
-                    <div class="flex gap-3 items-center">
-                        <nz-icon nzType="line-chart" nzTheme="outline" class="text-[26px]"
-                            style="color: #2A61CF;"></nz-icon>
-                        <h1 style="color: black;" class="text-black text-lg">Peças em processamento (Estágio 1 até 2)
-                        </h1>
-                    </div>
-                    <div class="flex flex-col gap-3">
-                        <div class="bg-gray-200 hover:bg-gray-300 rounded p-2 px-4 flex justify-between items-center ">
-                            <div class="flex flex-col">
-                                <h1 style="color: black;" class="font-bold">0001</h1>
-                                <h2 style="color: rgb(79, 77, 77);" class="text-sm">Estação 1</h2>
-                            </div>
-                            <div class="bg-blue-600 rounded-full flex items-center justify-center px-4 text-white py-1">
-                                11 peças</div>
+               <div class="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3  space-x-4 scroll-custom flex-wrap gap-4  ">
+                    <div *ngFor="let station of stationsWithParts" class=" max-h-[500px] min-w-[300px] w-full bg-gray-200  scroll-custom overflow-y-scroll rounded shadow p-4">
+                        <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-bold text-lg">{{ station.name }}</h3>
                         </div>
-                        <div class="bg-gray-200 hover:bg-gray-300 rounded p-2 px-4 flex justify-between items-center ">
-                            <div class="flex flex-col">
-                                <h1 style="color: black;" class="font-bold">0002</h1>
-                                <h2 style="color: rgb(79, 77, 77);" class="text-sm">Estação 2</h2>
+
+                        <div class="grid gap-2 ">
+                        <div *ngFor="let part of station.parts" class="bg-white p-2 rounded shadow flex justify-between items-center">
+                            <div>
+                            <p><b>{{ part.code }}</b></p>
+                            <p>ID: {{ part.id }}</p>
                             </div>
-                            <div class="bg-blue-600 rounded-full flex items-center justify-center px-4 text-white py-1">
-                                11 peças</div>
+                            <nz-icon class="cursor-pointer text-lg" (click)="moverParaProximaEstacao(part)" nzType="arrow-right" nzTheme="outline" />
                         </div>
-                        <div class="bg-gray-200 hover:bg-gray-300 rounded p-2 px-4 flex justify-between items-center ">
-                            <div class="flex flex-col">
-                                <h1 style="color: black;" class="font-bold">0003</h1>
-                                <h2 style="color: rgb(79, 77, 77);" class="text-sm">Estação 1</h2>
-                            </div>
-                            <div class="bg-blue-600 rounded-full flex items-center justify-center px-4 text-white py-1">
-                                11 peças</div>
                         </div>
                     </div>
-                </div>
+                    </div>
+
+    
             </div>
         </div>
     </div>

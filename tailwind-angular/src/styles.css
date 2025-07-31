@@ -1,1 +1,50 @@
 @import "tailwindcss";
+
+/* Scrollbar geral */
+::-webkit-scrollbar {
+  width: 10px; /* largura da barra */
+  height: 10px; /* altura para scroll horizontal */
+}
+
+/* Fundo do track (faixa onde a barra desliza) */
+::-webkit-scrollbar-track {
+  background: #f0f0f0; /* cor de fundo */
+  border-radius: 10px;
+}
+
+/* A barra que desliza (thumb) */
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* cor da barra */
+  border-radius: 10px;
+  border: 2px solid #f0f0f0; /* margem ao redor para dar efeito */
+}
+
+/* Hover na barra */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+
+.scroll-custom::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scroll-custom::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-custom::-webkit-scrollbar-thumb {
+  background-color: #A0AEC0; /* cinza médio */
+  border-radius: 20px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.scroll-custom::-webkit-scrollbar-thumb:hover {
+  background-color: #718096; /* cinza escuro */
+}
+
+.custom-notification .ant-notification-notice-message,
+.custom-notification .ant-notification-notice-description {
+  color: white !important;
+}

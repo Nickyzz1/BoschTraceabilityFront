@@ -28,16 +28,16 @@
 
         <div class="flex flex-col lg:grid lg:grid-cols-2 my-5 p-4 gap-4">
 
-            <div class="border border-gray-200 shadow p-4 rounded flex flex-col gap-4">
+            <div class="border border-gray-200 shadow p-4 rounded flex flex-col gap-4 ">
                 <div class="flex gap-3 items-center">
                     <nz-icon nzType="line-chart" nzTheme="outline" class="text-[26px]"
                         style="color: #2A61CF;"></nz-icon>
                     <h1 style="color: black;" class="text-black text-lg">Status das estações</h1>
                 </div>
-                <div class="flex flex-col gap-3">
+                <div class="flex flex-col gap-3 overflow-y-scroll max-h-[450px] scroll-custom">
                     <div
                         *ngFor="let station of stations"
-                        class="bg-gray-200 hover:bg-gray-300 rounded p-2 px-4 flex justify-between items-center"
+                        class="bg-gray-200 hover:bg-gray-300 rounded p-2 px-4 flex justify-between items-center "
                     >
                         <div class="flex flex-col">
                         <h1 style="color: black;" class="font-bold">{{ station.title }}</h1>
@@ -50,13 +50,13 @@
                 </div>
             </div>
 
-            <div class="border border-gray-200 shadow p-4 rounded flex flex-col gap-4">
+            <div class="border border-gray-200 shadow p-4 rounded flex flex-col gap-4 ">
                 <div class="flex gap-3 items-center">
                     <nz-icon nzType="line-chart" nzTheme="outline" class="text-[26px]"
                         style="color: #2A61CF;"></nz-icon>
                     <h1 style="color: black;" class="text-black text-lg">Movimentações recentes</h1>
                 </div>
-                <div class="flex flex-col gap-3">
+                <div class="flex flex-col gap-3 overflow-y-scroll max-h-[450px] scroll-custom">
                     <div *ngFor="let moviment of history" class="bg-gray-200 hover:bg-gray-300 rounded p-2 px-4 flex justify-between items-center">
                         <div class="flex flex-col">
                         <h1 style="color: black;" class="font-bold">Peça {{ moviment.partId | number:'3.0' }}</h1>

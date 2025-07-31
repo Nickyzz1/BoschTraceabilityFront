@@ -2,16 +2,16 @@
 <div class="min-h-screen bg-gray-200 overflow-x-hidden">
 
     <!-- container com  padding -->
-    <div class="flex flex-col gap-4 px-6 mt-6 py-5">
+    <div class="flex flex-col gap-4 px-2 md:px-6 mt-6 py-5">
 
         <!-- Card central branco com sombra -->
         <div class="p-5 bg-white rounded shadow flex flex-col justify-center items-center mx-auto w-full gap-4">
 
             <!-- botões de seleção  -->
-            <div nz-button-group class="w-full flex m-3">
-              
+            <div nz-button-group class="w-full flex m-3 flex-col md:flex-row items-center gap-3 md:gap-0">
+
                 <button nz-button [nzType]="selected === 'pecas' ? 'default' : 'text'" (click)="select('pecas')"
-                    class="w-1/2" [ngStyle]="{
+                    class="w-full md:w-1/2" [ngStyle]="{
                         'border': selected === 'pecas' ? '1px solid #1890ff' : '1px solid #d9d9d9',
                         'z-index': selected === 'pecas' ? 1 : 0,
                         'color': selected === 'pecas' ? '#1890ff' : 'inherit'
@@ -20,9 +20,9 @@
                     Gestão de Peças
                 </button>
 
-                
+
                 <button nz-button [nzType]="selected === 'estacoes' ? 'default' : 'text'" (click)="select('estacoes')"
-                    class="w-1/2" [ngStyle]="{
+                    class="w-full md:w-1/2" [ngStyle]="{
                         'border': selected === 'estacoes' ? '1px solid #1890ff' : '1px solid #d9d9d9',
                         'z-index': selected === 'estacoes' ? 1 : 0,
                         'color': selected === 'estacoes' ? '#1890ff' : 'inherit'
@@ -40,16 +40,18 @@
                 <div class="flex flex-col">
                     <h1 class="font-bold text-2xl text-black">+ Cadastrar nova peça</h1>
                     <h2 class="text-gray-100" style="color: rgb(79, 77, 77);">Registre uma nova peça no sistema de
-                        produção</h2>
+                        produção
+                    </h2>
                 </div>
 
                 <label class="font-semibold text-gray-700" for="peca-codigo">Código da peça</label>
-                <div class="flex items-center gap-3">
+                <div class="flex flex-col md:flex-row items-center gap-3">
                     <div class="flex flex-col gap-2 w-full">
-                        <input nz-input id="peca-codigo" placeholder="Digite o código da peça"  [(ngModel)]="newPartCode"
+                        <input nz-input id="peca-codigo" placeholder="Digite o código da peça" [(ngModel)]="newPartCode"
                             type="text" class="!rounded-md" style="color: black;" />
                     </div>
-                    <button (click)="cadastrarPart()" style="color: white;" class="bg-blue-500 hover:bg-blue-800 text-white p-2 rounded cursor-pointer ease-in-out">
+                    <button (click)="registerPart()" style="color: white;"
+                        class="bg-blue-500 w-full md:w-auto hover:bg-blue-800 text-white p-1 md:p-2 rounded cursor-pointer ease-in-out">
                         Cadastrar
                     </button>
                 </div>
@@ -61,104 +63,75 @@
                 </div>
 
                 <label class="font-semibold text-gray-700" for="peca-codigo-search">Pesquise por código</label>
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-3 flex-col md:flex-row">
                     <div class="flex flex-col gap-2 w-full">
                         <input nz-input id="peca-codigo-search" placeholder="Digite o código da peça"
-                            [(ngModel)]="value" type="number" class="!rounded-md" style="color: black;" />
+                            [(ngModel)]="value" type="text" class="!rounded-md" style="color: black;" />
                     </div>
-                    <button style="color: white;" class="bg-blue-500 hover:bg-blue-800 text-white p-2 rounded cursor-pointer ease-in-out">
+                    <button style="color: white;"
+                        class="bg-blue-500 w-full md:w-auto hover:bg-blue-800 text-white p-1 md:p-2 rounded cursor-pointer ease-in-out">
                         Pesquisar
                     </button>
                 </div>
 
-                <nz-table [nzData]="parts" [nzFrontPagination]="false" [nzShowPagination]="false">
-                    <thead>
-                        <tr>
-                            <th>Código</th>
-                            <th>Data de Criação</th>
-                            <th>Estação Atual</th>
-                            <th>Status</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of parts">
-                            <td><b>{{ item.code }}</b></td>
-                            <td>{{ getStationName(item.curStationId) }}</td>
-                            <td>{{ item.status }}</td>
-                            <td>
-                                <nz-badge [nzStatus]="'processing'" [nzText]="item.status"></nz-badge>
-                            </td>
-                            <td class="flex items-center gap-6 cursor-pointer">
-                               <nz-icon nzType="edit" nzTheme="outline" (click)="openEditModal(item)"></nz-icon>
-                                <button (click)="openDeleteModal(item)" style="background:none; border:none; cursor:pointer;">
-                                    <nz-icon nzType="delete" nzTheme="outline"></nz-icon>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </nz-table>
+                <div class="overflow-x-auto scroll-custom w-full">
+                    <nz-table [nzData]="filteredParts" [nzShowPagination]="false" [nzFrontPagination]="false"
+                        [nzShowPagination]="false">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Data de Criação</th>
+                                <th>Estação Atual</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of filteredParts">
+                                <td><b>{{ item.code }}</b></td>
+                                <td>{{ getStationName(item.curStationId) }}</td>
+                                <td>{{ item.status }}</td>
+                                <td>
+                                    <nz-badge [nzStatus]="'processing'" [nzText]="item.status"></nz-badge>
+                                </td>
+                                <td class="flex items-center gap-6 cursor-pointer">
+                                    <nz-icon nzType="edit" nzTheme="outline" (click)="openEditModal(item)"></nz-icon>
+                                    <button (click)="openDeleteModal(item)"
+                                        style="background:none; border:none; cursor:pointer;">
+                                        <nz-icon nzType="delete" nzTheme="outline"></nz-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </nz-table>
+                </div>
 
-            '   <div
-                *ngIf="editModalVisible"
-                style="background-color: rgba(0, 0, 0, 0.514);"
-                class="fixed inset-0 bg-opacity-50 flex justify-center items-center z-50"
-                >
-                <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative">
-                    <h2 class="text-xl font-semibold mb-4">Editar Código da Peça</h2>
+                <!-- MODAL ATUALIZAR PEÇA -->
 
-                    <input
-                    [(ngModel)]="partCode"
-                    placeholder="Código da peça"
-                    class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-
-                    <div class="mt-6 flex justify-end gap-3">
-                    <button
-                    
-                        (click)="editModalVisible = false"
-                        class="px-4 py-2 rounded border border-gray-300 hover:bg-gray-100 cursor-pointer"
-                    >
-                        Cancelar
-                    </button>
-                    <button
-                        style="color: white;"
-                        (click)="save()"
-                        class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
-                    >
-                        Salvar
-                    </button>
+                <nz-modal [(nzVisible)]="editModalVisible" nzTitle="Editar peça"
+                    (nzOnCancel)="editModalVisible = false" (nzOnOk)="updatePart()" [nzOkDanger]="false"
+                    [nzOkText]="'Editar'" [nzCancelText]="'Cancelar'" [nzOkLoading]="loading">
+                    <div *nzModalContent class="flex flex-col gap-3">
+                        <div>
+                            <label for="">Código da peça</label>
+                            <input nz-input [(ngModel)]="partCode" placeholder="Novo código" />
+                        </div>
                     </div>
 
-                    <!-- Botão fechar (X) no canto -->
-                    <button
-                        style="color: white;"
-
-                    (click)="editModalVisible = false"
-                    class="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
-                    aria-label="Fechar modal"
-                    >
-                    &times;
-                    </button>
-                </div>
-                </div>  
-
-                <nz-modal
-                [(nzVisible)]="deleteModalVisible"
-                nzTitle="Confirmar Exclusão"
-                (nzOnCancel)="deleteModalVisible = false"
-                (nzOnOk)="confirm()"
-                [nzOkDanger]="true"
-                [nzOkText]="'Excluir'"
-                [nzCancelText]="'Cancelar'"
-                [nzOkLoading]="loading"
-                >
-                <p>Tem certeza que deseja excluir a peça <b>{{ partCode }}</b>?</p>
                 </nz-modal>
 
-            </div> <!-- Fim bloco PEÇAS -->
+                <!-- MODAL EXCLUIR PEÇAS -->
+
+                <nz-modal [(nzVisible)]="deleteModalVisible" nzTitle="Confirmar Exclusão" [nzOkDanger]="true"
+                    [nzOkText]="'Excluir'" (nzOnCancel)="deleteModalVisible = false" (nzOnOk)="deletePart()"
+                    [nzOkLoading]="loading">
+                    <p *nzModalContent>Tem certeza que desseja excluir essa peça?</p>
+                </nz-modal>
+
+            </div>
 
             <!-- Conteúdo de ESTAÇÕES ------------------------------------------------------------------------------------------- -->
+            
             <div *ngIf="selected === 'estacoes'"
                 class="border shadow border-gray-300 flex flex-col gap-3 rounded p-4 w-full">
 
@@ -168,14 +141,15 @@
                     <h2 class="text-gray-100" style="color: rgb(79, 77, 77);">Registre uma nova estação no sistema</h2>
                 </div>
 
-''                <div class="flex flex-col md:flex-row gap-3 w-full">
+                '' <div class="flex flex-col md:flex-row gap-3 w-full">
                     <div class="flex flex-col md:flex-row items-center gap-3 w-full">
                         <div class="w-full">
                             <label class="font-semibold text-gray-700" for="estacao-codigo">Nome da estação</label>
                             <div class="flex items-center gap-3">
                                 <div class="flex flex-col gap-2 w-full">
-                                <input nz-input id="estacao-codigo" placeholder="Digite o código da estação"
-                                    [(ngModel)]="stationTitle" type="text" class="!rounded-md" style="color: black;" />
+                                    <input nz-input id="estacao-codigo" placeholder="Digite o código da estação"
+                                        [(ngModel)]="stationTitle" type="text" class="!rounded-md"
+                                        style="color: black;" />
                                 </div>
                             </div>
                         </div>
@@ -183,117 +157,80 @@
                             <label class="font-semibold text-gray-700" for="estacao-local">Ordem da estação</label>
                             <div class="flex items-center gap-3">
                                 <div class="flex flex-col gap-2 w-full">
-                                <input nz-input id="estacao-local" placeholder="Digite a ordem da estação"
-                                    [(ngModel)]="stationOrder" type="number" class="!rounded-md" style="color: black;" />
+                                    <input nz-input id="estacao-local" placeholder="Digite a ordem da estação"
+                                        [(ngModel)]="stationOrder" type="number" class="!rounded-md"
+                                        style="color: black;" />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <button (click)="cadastrarEstacao()" style="color: white;" class="bg-blue-500 hover:bg-blue-800 text-white p-2 rounded cursor-pointer ease-in-out">
-                Cadastrar
-            </button>
+                <button (click)="registerStation()" style="color: white;"
+                    class="bg-blue-500 hover:bg-blue-800 text-white p-2 rounded cursor-pointer ease-in-out">
+                    Cadastrar
+                </button>
 
-            <!-- Listagem de estações -->
-            <div class="flex flex-col mt-4">
-                <h1 class="font-bold text-2xl text-black">Listagem de estações</h1>
-                <h2 class="text-gray-100" style="color: rgb(79, 77, 77);">1 estação cadastrada no sistema</h2>
-            </div>
+                <!-- Listagem de estações -->
+                <div class="flex flex-col mt-4">
+                    <h1 class="font-bold text-2xl text-black">Listagem de estações</h1>
+                    <h2 class="text-gray-100" style="color: rgb(79, 77, 77);">1 estação cadastrada no sistema</h2>
+                </div>
 
+                <div class="overflow-x-auto scroll-custom w-full">
+                    <nz-table class="min-w-[600px]" [nzData]="stations" [nzFrontPagination]="false"
+                        [nzShowPagination]="false">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Ordem no processo</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of stations">
+                                <td><b>{{ item.title }}</b></td>
+                                <td>{{ item.sort }}</td>
+                                <td class="flex items-center gap-6 cursor-pointer">
+                                    <nz-icon (click)="openEditModalStation(item)" nzType="edit"
+                                        nzTheme="outline"></nz-icon>
+                                    <nz-icon (click)="openDeleteModalStation(item)" nzType="delete"
+                                        nzTheme="outline"></nz-icon>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </nz-table>
+                </div>
 
-            <nz-table [nzData]="stations" [nzFrontPagination]="false" [nzShowPagination]="false">
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Data de Criação</th>
-                        <th>Quantidade</th>
-                        <th>Ações</th>
-                    
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of stations">
-                        <td><b>{{ item.title}}</b></td>
-                        <td>{{ item.sort }}</td>
-        
-                        <td class="flex items-center gap-6 cursor-pointer">
-                        <nz-icon (click)="openEditModalStation(item)" nzType="edit" nzTheme="outline" ></nz-icon>
-                          <button (click)="openDeleteModalStation(item)" style="background:none; border:none; cursor:pointer;">
-                            <nz-icon nzType="delete" nzTheme="outline"></nz-icon>
-                        </button>
-                        </td>
-                                            
-                    </tr>
-                </tbody>
-            </nz-table>
+            <!-- MODAL EDITAR ESTAÇÃO  -->
 
-             <div
-                *ngIf="editModalVisible"
-                style="background-color: rgba(0, 0, 0, 0.514);"
-                class="fixed inset-0 bg-opacity-50 flex justify-center items-center z-50"
-                >
-                <div class="bg-white rounded-lg shadow-lg w-96 p-6 relative">
-                    <h2 class="text-xl font-semibold mb-4">Editar Estação</h2>
-
-                    <input
-                    [(ngModel)]="stationNewTitle"
-                    placeholder="Código da peça"
-                    class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-
-                    <input
-                    [(ngModel)]="stationNewOrder"
-                    placeholder="Código da peça"
-                    class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-
-                    <div class="mt-6 flex justify-end gap-3">
-                    <button
-                    
-                        (click)="editModalVisible = false"
-                        class="px-4 py-2 rounded border border-gray-300 hover:bg-gray-100 cursor-pointer"
-                    >
-                        Cancelar
-                    </button>
-                    <button
-                        style="color: white;"
-                        (click)="saveStation()"
-                        class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
-                    >
-                        Salvar
-                    </button>
+                <nz-modal [(nzVisible)]="editModalVisible" nzTitle="Editar estação"
+                    (nzOnCancel)="editModalVisible = false" (nzOnOk)="updateStation()" [nzOkDanger]="false"
+                    [nzOkText]="'Editar'" [nzCancelText]="'Cancelar'" [nzOkLoading]="loading">
+                    <div *nzModalContent class="flex flex-col gap-3">
+                        <div>
+                            <label for="">Estação</label>
+                            <input nz-input [(ngModel)]="stationNewTitle" placeholder="Novo nome da estação" />
+                        </div>
+                        <div>
+                            <label for="">Ordem</label>
+                            <input nz-input [(ngModel)]="stationNewOrder" placeholder="Ordem da estação" />
+                        </div>
                     </div>
 
-                    <!-- Botão fechar (X) no canto -->
-                    <button
-                        style="color: white;"
-
-                    (click)="editModalVisible = false"
-                    class="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
-                    aria-label="Fechar modal"
-                    >
-                    &times;
-                    </button>
-                </div>
-                </div>  
-
-                <nz-modal
-                [(nzVisible)]="deleteModalVisible"
-                nzTitle="Confirmar Exclusão"
-                (nzOnCancel)="deleteModalVisible = false"
-                (nzOnOk)="confirmDeleteStation()"
-                [nzOkDanger]="true"
-                [nzOkText]="'Excluir'"
-                [nzCancelText]="'Cancelar'"
-                [nzOkLoading]="loading"
-                >
-                <p>Tem certeza que deseja excluir a estação?</p>
                 </nz-modal>
 
-        </div> <!-- Fim bloco ESTAÇÕES -->
+                <!-- MODAL EXCLUIR ESTAÇÃO -->
 
-    </div> <!-- Fim do card branco central -->
+                <nz-modal [(nzVisible)]="deleteModalVisible" nzTitle="Confirmar Exclusão"
+                    (nzOnCancel)="deleteModalVisible = false" (nzOnOk)="deleteStation()" [nzOkDanger]="true"
+                    [nzOkText]="'Excluir'" [nzCancelText]="'Cancelar'" [nzOkLoading]="loading">
+                    <div *nzModalContent>
+                        <p class="font-bold">Tem certeza que deseja excluir a estação?</p>
+                        <p>Todas as peças associadas a essa estação serão excluidas permanentemente!</p>
+                    </div>
+                </nz-modal>
 
-</div> <!-- Fim da coluna principal -->
-
-</div> <!-- Fim do container principal -->
+            </div> 
+        </div> 
+    </div> 
+</div> 
